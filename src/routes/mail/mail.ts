@@ -735,6 +735,110 @@ mailRoutes.post("/leads", async (req, res) =>  {
 });
 
 
+mailRoutes.post("/scheduling", async (req, res) =>  {
+  const {email} = req.body;
+
+ let transporter = nodemailer.createTransport({
+      name: 'contato@suachaveauto.com.br',
+      host: "smtp.umbler.com",
+    port: 587,
+    
+    tls: {
+      rejectUnauthorized: false,
+      minVersion: "TLSv1.2"
+  },
+    secure: false,
+    auth: {
+      user: "contato@suachaveauto.com.br",
+      pass: "211902fluminensE@"
+    }
+  });
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Sua Chave" <contato@suachaveauto.com.br>', // sender address
+    to: email, // list of receivers
+    subject: "Novo Agendamento recebido 📅", // Subject line
+    text: "Novo Agendamento recebido 📅", // plain text body
+    html: `<p style="text-decoration: none;">
+    Você recebeu um novo agendamento! <br/><br />
+    
+    Acesse sua área administrativa e veja clicando no link abaixo:<br/>
+    <a href="https://adm.suachaveauto.com.br" target="_blank" style="text-decoration: none; color: black; font-weight: bold;">Acessar área administrativa</a> <br/>
+  
+    <br/>
+    Em caso de dúvida, fale conosco. <br/>
+    Whatsapp: (21) 99742-9585<br/>
+    E-mail: contato@suachaveauto.com.br <br/>
+    --
+    <br/>
+    <a href="https://www.suachaveauto.com.br" target="_blank" style="text-decoration: none; color: black; font-weight: bold;">www.suachaveauto.com.br</a><p/>`, // html body.
+  });
+
+
+
+  if(info) {
+        res.status(200).json({"message":"Email enviado com sucesso"});
+    console.log("Email enviado com sucesso")
+  } 
+});
+
+
+mailRoutes.post("/alertPayment", async (req, res) =>  {
+  const {email, name} = req.body;
+
+  let transporter = nodemailer.createTransport({
+    name: 'contato@suachaveauto.com.br',
+    host: "smtp.umbler.com",
+  port: 587,
+  
+  tls: {
+    rejectUnauthorized: false,
+    minVersion: "TLSv1.2"
+},
+  secure: false,
+  auth: {
+    user: "contato@suachaveauto.com.br",
+    pass: "211902fluminensE@"
+  }
+});
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Sua Chave Auto" <contato@suachaveauto.com.br>', // sender address
+    to: email, // list of receivers
+    subject: "Lembrete de pagamento 📅", // Subject line
+    text: "Lembrete de pagamento 📅", // plain text body
+    html: `<p style="text-decoration: none;">
+    Olá, ${name} <br/>
+    Seu plano encontra-se em aberto desde o dia 10/08/2023.<br/><br/>
+    Evite a suspensão dos serviços. Para efetuar o pagamento é bem fácil. <br/>
+    No menu lateral esquerdo, vá na opção Conta, em seguida clique em Meu Plano, Clique em novo pagamento e por fim, gerar Bolix.<br/>
+    Viu como é fácil!?
+    <br /><br/>
+    
+    Acesse sua área administrativa e veja clicando no link abaixo:<br/>
+    <a href="https://adm.suachaveauto.com.br" target="_blank" style="text-decoration: none; color: black; font-weight: bold;">Acessar área administrativa</a> <br/>
+  
+    <br/>
+    Em caso de dúvida, fale conosco. <br/>
+    Whatsapp: (21) 99742-9585<br/>
+    E-mail: contato@suachaveauto.com.br <br/>
+    --
+    <br/>
+    <a href="https://www.suachaveauto.com.br" target="_blank" style="text-decoration: none; color: black; font-weight: bold;">www.suachaveauto.com.br</a><p/>`, // html body.
+  });
+
+
+
+  if(info) {
+        res.status(200).json({"message":"Email enviado com sucesso"});
+    console.log("Email enviado com sucesso")
+  } 
+});
+
+
+
 export { mailRoutes };
 
 
