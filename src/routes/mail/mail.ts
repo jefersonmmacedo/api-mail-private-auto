@@ -26,7 +26,7 @@ const mailRoutes = Router();
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
-    to: "contato@suachaveauto.com.br", // list of receivers
+    to: "contato@suachaveauto.com.br, suachaveauto@gmail.com", // list of receivers
     subject: "Nova conta criada ✔", 
     text: "Nova conta criada ✔", 
     html: `<p style="text-decoration: none;">Sucesso!! <br/>
