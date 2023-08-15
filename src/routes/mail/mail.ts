@@ -4,6 +4,52 @@ import nodemailer from 'nodemailer';
 
 const mailRoutes = Router();
 
+ mailRoutes.post("/newClient", async (req, res) =>  {
+  const {email, name, address} = req.body;
+
+ let transporter = nodemailer.createTransport({
+      name: 'contato@suachaveauto.com.br',
+      host: "smtp.umbler.com",
+      service:'smtp.umbler.com',
+      port:587,
+      secure:false,
+    tls: {
+      rejectUnauthorized: true,
+      minVersion: "TLSv1.2"
+  },
+    auth: {
+      user: "contato@suachaveauto.com.br",
+      pass: "211902fluminensE@"
+    }
+  });
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
+    to: "contato@suachaveauto.com.br", // list of receivers
+    subject: "Nova conta criada ✔", 
+    text: "Nova conta criada ✔", 
+    html: `<p style="text-decoration: none;">Sucesso!! <br/>
+    Temos um novo cliente na plataforma.
+    Entre em contato para fornecer ajuda ou suporte inicial<br /><br />
+    Cliente: ${name}<br/>
+    E-mail: ${email}<br/>
+    Endereço: ${address}<br/><br/>
+    
+    “Em tudo que fizerem, trabalhem de bom ânimo, como se fosse para o Senhor, e não para os homens”<br/>
+    (Cl 3.23)<br/><br/>
+
+    <br/>
+    <a href="https://www.suachaveauto.com.br" target="_blank" style="text-decoration: none; color: black; font-weight: bold;">www.suachaveauto.com.br</a><p/>`, // html body.
+  });
+
+
+
+  if(info) {
+        res.status(200).json({"message":"Email enviado com sucesso"});
+    console.log("Email enviado com sucesso")
+  } 
+});
  mailRoutes.post("/create", async (req, res) =>  {
   const {email, name} = req.body;
 
@@ -25,10 +71,10 @@ const mailRoutes = Router();
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Sua conta foi criada ✔", // Subject line
-    text: "Sua conta foi criada ✔", // plain text body
+    subject: "Sua conta foi criada ✔", 
+    text: "Sua conta foi criada ✔", 
     html: `<p style="text-decoration: none;">Parabens ${name}! <br/>
     Seja muito bem-vindo a Sua Chave Auto.
     Somos uma start-up criada para agências e consultores, com foco em conectar seus autos a novos clientes. <br /><br />
@@ -73,10 +119,10 @@ const mailRoutes = Router();
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Sua conta foi atualizada ✔", // Subject line
-    text: "Sua conta foi atualizada ✔", // plain text body
+    subject: "Sua conta foi atualizada ✔", 
+    text: "Sua conta foi atualizada ✔", 
     html: `<p style="text-decoration: none;">Olá, ${name}. <br/>
     Sua conta foi atualizada com sucesso!<br/>
    
@@ -116,10 +162,10 @@ mailRoutes.post("/createClient", async (req, res) =>  {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Sua conta foi criada ✔", // Subject line
-    text: "Sua conta foi criada ✔", // plain text body
+    subject: "Sua conta foi criada ✔", 
+    text: "Sua conta foi criada ✔", 
     html: `<p style="text-decoration: none;">Parabens ${name}! <br/>
     Seja muito bem-vindo a Sua Chave Auto.
     Encontreos os melhores imóveis com o perfil que você deseja. <br /><br />
@@ -165,10 +211,10 @@ mailRoutes.post("/newContract", async (req, res) =>  {
   
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: `Processo de ${status} iniciado`, // Subject line
-    text: `Processo de ${status} iniciado`, // plain text body
+    subject: `Processo de ${status} iniciado`, 
+    text: `Processo de ${status} iniciado`, 
     html: `<p>Olá ${name}, <br/>
     A agência ${company}, iniciou o processo de ${status} do auto: ${title}.<br/>
     Clique no link abaixo para enviar os documentos necessários para dar seguimento ao processo.:<br/>
@@ -209,10 +255,10 @@ mailRoutes.post("/documents", async (req, res) =>  {
   
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Você recebeu novos documentos", // Subject line
-    text: "Você recebeu novos documentos", // plain text body
+    subject: "Você recebeu novos documentos", 
+    text: "Você recebeu novos documentos", 
     html: `<p>Olá, temos novidades<br/>
     O Cliente: ${name}
     Enviou os documentos solicitados.<br/><br/>
@@ -253,10 +299,10 @@ mailRoutes.post("/voucher", async (req, res) =>  {
   
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Estamos analisando 🕗", // Subject line
-    text: "Estamos analisando 🕗", // plain text body
+    subject: "Estamos analisando 🕗", 
+    text: "Estamos analisando 🕗", 
     html: `<p>Recebemos o seu pedido de pagamento e seu comprovante<br/>
     Em até 48h você receberá um e-mail de confirmação, informando estar tudo ok com o comprovante enviado.<br/><br/>
     Não se preocupe, seu acesso ja está liberado. <br/>
@@ -296,10 +342,10 @@ mailRoutes.post("/paymentaproved", async (req, res) =>  {
   
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Pagamento confirmado 👏", // Subject line
-    text: "Pagamento confirmado 👏", // plain text body
+    subject: "Pagamento confirmado 👏", 
+    text: "Pagamento confirmado 👏", 
     html: `<p>Tudo certo, identificamos seu pagamento<br/>
     Continue a usar nossa plataforma aproveitando nossos serviços.<br/>
     <a href="https://adm.suachaveauto.com.br" target="_blank" style="text-decoration: none; color: black; font-weight: bold;">Acessar área administrativa</a> <br/>
@@ -345,10 +391,10 @@ mailRoutes.post("/newmessage", async (req, res) =>  {
   
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Você tem uma nova mensagem 📨", // Subject line
-    text: "Você tem uma nova mensagem 📨", // plain text body
+    subject: "Você tem uma nova mensagem 📨", 
+    text: "Você tem uma nova mensagem 📨", 
     html: `<p>Você recebeu uma nova mensagem.
     <br/><br/>
     <a href="${link}" target="_blank" style="text-decoration: none; color: black; font-weight: bold;">Clique aqui para abrir a mensagem</a>
@@ -387,10 +433,10 @@ mailRoutes.post("/alert", async (req, res) =>  {
   
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Alerta correspondente 😉", // Subject line
-    text: "Alerta correspondente 😉", // plain text body
+    subject: "Alerta correspondente 😉", 
+    text: "Alerta correspondente 😉", 
     html: `<p>Um novo auto foi adicionado e corresponde com seu alerta.<br/>
     Clique no link abaixo e veja:.
     <br/><br/>
@@ -430,10 +476,10 @@ mailRoutes.post("/paymentreproved", async (req, res) =>  {
   
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Temos um problema 😢", // Subject line
-    text: "Ops. Temos um problema 😢", // plain text body
+    subject: "Temos um problema 😢", 
+    text: "Ops. Temos um problema 😢", 
     html: `<p>Não identificamos o seu pagamento.<br/>
     O comprovante enviado não é válido ou não bate com nossa base de pagamentos.
     <br/><br/>
@@ -480,10 +526,10 @@ mailRoutes.post("/passwordcode", async (req, res) =>  {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: mail.mail, // list of receivers
-    subject: "Recupere seu acesso 🗝️", // Subject line
-    text: "Recupere seu acesso 🗝️", // plain text body
+    subject: "Recupere seu acesso 🗝️", 
+    text: "Recupere seu acesso 🗝️", 
     html: `<p>Você solicitou código de recuperação de senha?<br/>
     Aqui está. Utilize-o para redefinir seu acesso:<p/> 
     <p>Seu código:</p>
@@ -522,10 +568,10 @@ mailRoutes.post("/newpassword", async (req, res) =>  {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: mail.mail, // list of receivers
-    subject: "Senha alterada 🔒", // Subject line
-    text: "Senha alterada 🔒", // plain text body
+    subject: "Senha alterada 🔒", 
+    text: "Senha alterada 🔒", 
     html: `<p>Sua senha foi alterada com sucesso.<br/>
     Faça login com seu e-mail e nova senha:<p/> 
 
@@ -567,10 +613,10 @@ mailRoutes.post("/shedulingAvaluation", async (req, res) =>  {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Avaliação agendada 📅", // Subject line
-    text: "Avaliação agendada 📅", // plain text body
+    subject: "Avaliação agendada 📅", 
+    text: "Avaliação agendada 📅", 
     html: `<p style="text-decoration: none;">Olá, ${nameClient}! <br/>
     A avaliação de seu auto foi agendada.
     Sua avaliação será na data ${day}/${month}/${year} - Turno: ${shift}, Horário: ${hour}. <br />
@@ -617,10 +663,10 @@ mailRoutes.post("/newPayment", async (req, res) =>  {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Novo Bolix Gerado 💳", // Subject line
-    text: "Novo Bolix Gerado 💳", // plain text body
+    subject: "Novo Bolix Gerado 💳", 
+    text: "Novo Bolix Gerado 💳", 
     html: `<p style="text-decoration: none;">Novo Bolix Gerado! <br/>
     O cliente ${nameClient}, gerou um novo bolix.<br/><br/>
     Plano: ${plain} - Valor: ${value}<br/><br/>
@@ -662,10 +708,10 @@ mailRoutes.post("/newPlainCreated", async (req, res) =>  {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Novo Bolix Gerado 💳", // Subject line
-    text: "Novo Bolix Gerado 💳", // plain text body
+    subject: "Novo Bolix Gerado 💳", 
+    text: "Novo Bolix Gerado 💳", 
     html: `<p style="text-decoration: none;">Novo Bolix Gerado! <br/>
     O cliente ${nameClient}, gerou um novo bolix.<br/><br/>
     Plano: ${plain} - Valor: ${value}<br/><br/>
@@ -707,10 +753,10 @@ mailRoutes.post("/leads", async (req, res) =>  {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto - Carros e Motos" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Novo lead recebido 🚀", // Subject line
-    text: "Novo lead recebido 🚀", // plain text body
+    subject: "Novo lead recebido 🚀", 
+    text: "Novo lead recebido 🚀", 
     html: `<p style="text-decoration: none;">
     Você recebeu um novo lead! <br/>
     Um cliente deseja entrar em contato via ligação ou whatsapp. <br /><br />
@@ -756,10 +802,10 @@ mailRoutes.post("/scheduling", async (req, res) =>  {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Novo Agendamento recebido 📅", // Subject line
-    text: "Novo Agendamento recebido 📅", // plain text body
+    subject: "Novo Agendamento recebido 📅", 
+    text: "Novo Agendamento recebido 📅", 
     html: `<p style="text-decoration: none;">
     Você recebeu um novo agendamento! <br/><br />
     
@@ -805,10 +851,10 @@ mailRoutes.post("/alertPayment", async (req, res) =>  {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sua Chave Auto" <contato@suachaveauto.com.br>', // sender address
+    from: '"Sua Chave Auto" <contato@suachaveauto.com.br>', 
     to: email, // list of receivers
-    subject: "Lembrete de pagamento 📅", // Subject line
-    text: "Lembrete de pagamento 📅", // plain text body
+    subject: "Lembrete de pagamento 📅", 
+    text: "Lembrete de pagamento 📅", 
     html: `<p style="text-decoration: none;">
     Olá, ${name} <br/>
     Seu plano encontra-se em aberto desde o dia 10/08/2023.<br/><br/>
