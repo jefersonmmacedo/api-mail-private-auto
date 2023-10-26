@@ -5,7 +5,7 @@
   "author": "Jeferson Macedo <jefersonmacedowgf@gmail.com> (https://github.com/jefersonmmacedo)",
   "license": "MIT",
   "engines": {
-    "node": "16.x",
+    "node": "18.x",
     "npm": "8.x"
   },
   "scripts": {
